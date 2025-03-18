@@ -1,0 +1,138 @@
+.include beta.uasm
+.include lab5checkoff.uasm
+
+
+count_bull_cows: | your subroutine must have this name
+	| standard subroutine entry sequence
+	PUSH(LP)	
+	PUSH(BP)	
+	MOVE(SP,BP)	
+	| PUSH all used registers
+	PUSH(R1)		| bulls
+	PUSH(R2)		| cows
+	PUSH(R3)		| i
+	PUSH(R4)		| j
+	PUSH(R5)		| btemp
+	PUSH(R6)		| atry
+	PUSH(R7)		| btry
+	PUSH(R8)		| mask
+	PUSH(R9)		| temp reg
+	PUSH(R10)		| temp reg
+	PUSH(R11)		| a
+	PUSH(R12)		| b
+	LD(BP,-12,R11)		| load the arg value of constant a to R11
+	LD(BP,-16,R12)		| load the arg value of constant b to R12
+	CMOVE(0,R1)		| set initial val of var bulls = 0
+	CMOVE(0xF,R8)		| set initial val of var mask = 0xF
+	CMOVE(0,R3)		| set initial val of var i = 0
+  	CMOVE(0,R4)   | set initial val of var j = 0
+	
+	|||||||||||||||||||||||||||||||||||||||||||||||
+	|||| … your code here, leave score (return value) in R0 …
+	|||||||||||||||||||||||||||||||||||||||||||||||
+
+|| COMPUTE BULLS
+forbull:
+	AND(R11, R8, R9) | a&mask
+	AND(R12, R8, R10) | b&mask
+	CMPEQ(R9, R10, R9) | (a&mask) == (b&mask)
+	| branch depending on whether (a&mask) == (b&mask)
+	BEQ(R9, end_bull_if, R31)
+	| if we reach here, it means (a&mask) == (b&mask)
+	ADDC(R1, 1, R1) | add bull count by 1
+	OR(R11, R8, R11) | a | mask
+	OR(R12, R8, R12) | b | mask
+
+end_bull_if: | we go here after we come out of bull_if
+	SHLC(R8, 4, R8) | mask << 4
+
+	| i = i + 1
+	| increment i and check for-loop condition
+	ADDC(R3, 1, R3)
+
+	CMPLEC(R3, 3, R9) | check if i <= 3 (equivalently i < 4)
+	| if the above is true, we do another bull for-loop
+	BNE(R9, forbull, R31)
+|| temporarily put bulls in R0
+ADD(R1, R31, R0) | e.g: if content of R1 is 0x2 ---> Reg[R0] = 0x2
+SHLC(R0, 4, R0) | e.g: Reg[R0] = Ox20
+|| later on, just OR R0 with cows (R2) to obtain bull-cow answer
+
+|| COMPUTE COWS
+
+|| set i = 0 to begin the puter for loop
+	ADDC(R31, 0, R3) | i = 0
+	ADDC(R31, 0, R2) | cows = 0
+
+foroutercow:
+	ANDC(R11, 0xF, R6) | atry = a &0xF
+	SHRC(R11, 4, R11) | a >> 4
+
+	|| do check atry != 0xF
+	CMPEQC(R6, 0xF, R9) |check if atry == 0xF
+
+	|| if atry == 0xF, then R9 is 0
+	|| else of atry != 0xF then R9 is 0
+	|| we don't want to branch if R9 is 0
+	BNE(R9, end_outer_cow_for, R31)
+	
+	|| if (atry != 0xF)
+	ADD(R12, R31, R5) | btemp = b
+	ADDC(R31, 0xF, R8) | masl = 0xF
+	|| set j = 0, to begin inner loop
+	ADDC(R31, 0, R4) 
+
+forinnercow:
+	ANDC(R5, 0xF, R7) | btry = btemp & 0xF
+	SHRC(R5, 4, R5) | btemp >> 4
+
+	|| if-inner-cow
+	CMPEQ(R6, R7, R9) | check atry == btry
+	BEQ(R9, end_inner_cow_if, R31)
+	ADDC(R2, 1, R2) | cows + 1
+	OR(R12, R8, R12) | b | mask
+	|| Prepare to BREAK
+	BR(end_outer_cow_for)
+
+end_inner_cow_if:
+	SHLC(R8, 4, R8) | mask << 4
+	|j = j + 1, increment the j for inner cow
+	ADDC(R4, 1, R4)
+
+end_inner_cow_for:
+	CMPLEC(R4, 3, R9) |cjeck if j < 4
+	BNE( R9, forinnercow, R31) | if yes, begin the inner for-loop again
+	| else, continue to advance the outer for-loop
+
+end_outer_cow_for:
+	ADDC(R3, 1, R3) |increment i: i= i +1
+	CMPLEC(R3, 3, R9) |check if i < 4
+	BNE(R9, foroutercow) | if yes, begin the outermost for-loop again
+
+	||write cows into R0
+	OR(RO, R2, RO) | e.g: intially, RO contains 0x20 and R2 contains 0x04
+	| OR(R0, R2, R0) results in 0x24
+
+	POP(R12)
+	POP(R11)
+	POP(R10)
+	POP(R9)
+	POP(R8)
+	POP(R7)
+	POP(R6)
+	POP(R5)
+	POP(R4)
+	POP(R3)
+	POP(R2)
+	POP(R1)
+	
+	| … POP saved registers above in reverse order…
+	MOVE(BP,SP)
+	POP(BP)
+	POP(LP)
+	RTN()
+
+
+StackBase: 
+	LONG(.+4)		| Pointer to the bottom of stack
+	.=.+0x1000		| Reserve space for stack

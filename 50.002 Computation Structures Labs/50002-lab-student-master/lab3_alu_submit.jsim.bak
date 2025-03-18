@@ -1,0 +1,193 @@
+.include "nominal.jsim"
+.include "stdcell.jsim"
+.include "lab3_mult.jsim"
+*.include "lab3_testadder.jsim"
+* .include "lab3_testcompare.jsim"
+*.include "lab3_testboolean.jsim"
+* .include "lab3_testshifter.jsim"
+* .include "lab3_testmultiply.jsim"
+.include "lab3checkoff.jsim"
+
+
+
+**********************************
+**** FA circuit ******************
+.subckt FA a b cin s co
+* Paste your answer from Lab 2 here
+* Replace the gates using stdcell gates instead of your custom gates
+* BEGIN ANSWER
+
+** S bit**
+Xxor1 a b xor1_out xor2
+Xxor2 xor1_out cin s xor2
+
+**Cout bit**
+Xc1 a b co1 nand2
+Xc2 a cin co2 nand2
+Xc3 b cin co3 nand2
+Xc4 co1 co2 co3 co nand3
+
+* END ANSWER
+.ends
+
+**********************************
+**** Adder32 circuit *************
+.subckt adder32 ALUFN[0] a[31:0] b[31:0] s[31:0] z v n
+* BEGIN ANSWER
+** CIRCUIT TO PRODUCE XB **
+Xb b[31:0] ALUFN0#32 xb[31:0] xor2
+
+** CIRCUIT FOR 32-bit RCA **
+Xbit0 a0 xb0 ALUFN0 s0 c0 FA
+Xbit_the_rest a[31:1] xb[31:1] c[30:0] s[31:1] c[31:1] FA
+
+** CIRCUIT FOR Z **
+Xz0 s[3:0] z0 or4
+Xz1 s[7:4] z1 or4
+Xz2 s[11:8] z2 or4
+Xz3 s[15:12] z3 or4
+Xz4 s[19:16] z4 or4
+Xz5 s[23:20] z5 or4
+Xz6 s[27:24] z6 or4
+Xz7 s[31:28] z7 or4
+
+Xz8 Z[3:0] z00 or4
+Xz9 Z[7:4] z11 or4
+Xz10 z00 z11 z nor2
+
+** CIRCUIT for V **
+** INVERTERS **
+Xinva31 a31 na31 inverter
+Xinvb31 b31 nb31 inverter
+Xinvs31 s31 ns31 inverter
+
+Xv_firsterm a31 xb31 ns31 v_firsterm and3
+Xv_secondterm na31 nxb31 nxb31 v_secondterm and3
+Xv_out v_firsterm v_secondterm v or2
+
+** CIRCUIT for N **
+Xbuf s31 n buffer
+
+* END ANSWER
+.ends
+*********************************
+
+
+**********************************
+**** Compare32 circuit ***********
+.subckt compare32 ALUFN[2:1] z v n cmp[31:0]
+* BEGIN ANSWER
+.connect cmp[31:1] 0
+
+Xnv n v nxorv xor2
+Xznv nxorv z z_or_nxorv or2
+
+*s0 -- ALUFN1
+*s1 -- ALUFN2 
+
+*d0 -- 00 -- does not matter (set it as ground)
+*d1 __ 10 __ alufn1 is 1, alufn2 is 0 -- set it to z
+*d2 -- 01 -- alufn1 is 0, alufn2 is 1 -- set it to nxorv
+
+Xcmp_out ALUFN1 ALUFN2 x x x x cmp0 mux4
+
+
+* END ANSWER
+.ends
+**********************************
+
+**********************************
+**** Boolean32 circuit ***********
+.subckt boole32 ALUFN[3:0] A[31:0] B[31:0] boole[31:0]
+* BEGIN ANSWER
+
+*A is s0
+*B is s1
+*d0 is when AB 00
+*d1 is when AB 10
+*d2 is when AB 01
+*d3 is when AB 11
+
+Xboole A[31:0] B[31:0] ALUFN0#32 ALUFN1#32 ALUFN2#32 ALUFN3#32 boole[31:0] mux4
+
+* END ANSWER
+.ends
+**********************************
+
+**********************************
+**** Shifter32 circuit ***********
+.subckt shift32 ALUFN[1:0] A[31:0] B[4:0] shift[31:0]
+* BEGIN ANSWER
+
+*** CICRCUIT FOR SHIFT LEFT ***
+** 16 BITS SHIFT LEFT **
+Xw1 B4#16 A[31:16] A[15:0] w[31:16] mux2
+Xw2 B4#16 A[15:0] 0#16 w[15:0] mux2
+
+** 8 BITS SHIFT LEFT **
+Xx1 B3#24 w[31:8] w[23:0] x[31:8] mux2
+Xx2 B3#8 w[7:0] 0#8 x[7:0] mux2
+
+** 4 BITS SHIFT LEFT **
+Xy1 B2#28 x[31:4] x[27:0] y[31:4] mux2
+Xy2 B2#4 x[3:0] 0#4 y[3:0] mux2
+
+** 2 BITS SHIFT LEFT **
+Xz1 B1#30 y[31:2] y[29:0] z[31:2] mux2
+Xz2 B1#2 y[1:0] 0#2 z[1:0] mux2
+
+** 1 BITS SHIFT LEFT **
+Xshl1 BO#31 z[31:1] z[30:0] sl[31:1] mux2
+Xshl2 B0 z0 0 sl0 mux2
+
+*** CICRCUIT FOR SHIFT RIGHT ***
+*choose whether we pad with 0 or A31(MSB of A) *
+Xmsb ALUFN1 0 A31 bitin mux2
+
+** 16 BITS SHIFT RIGHT **
+Xwr1 B4#16 A[31:16] bitin#16 wr[31:16] mux2
+Xwr2 B4#16 A[15:0] A[31:16] wr[15:0] mux2
+
+** 8 BITS SHIFT RIGHT **
+Xxr B3#32 wr[31:0] bitin#8 wr[31:8] xr[31:0] mux2
+
+** 4 BITS SHIFT RIGHT **
+Xyr B2#32 xr[31:0] bitin#4 xr[31:4] yr[31:0] mux2
+
+** 2 BITS SHIFT RIGHT **
+Xzr B1#32 yr[31:0] bitin#2 yr[31:2] zr[31:0] mux2
+
+** 1 BITS SHIFT RIGHT **
+Xshr B0#32 zr[31:0] bitin zr[31:1] sr[31:0] mux2
+
+*choose between the output if the SHL or the SHR*
+Xshift ALUFN0#32 sl[31:0] sr[31:0] shift[31:0] mux2
+
+* END ANSWER
+.ends
+**********************************
+
+**********************************
+**** ALU32 circuit ***************
+.subckt alu ALUFN[5:0] A[31:0] B[31:0] alu[31:0] z v n
+* BEGIN ANSWER
+
+Xadd ALUFN0 A[31:0] B[31:0] s[31:0] z v n adder32
+
+Xmult A[31:0] B[31:0] m[31:0] mult32
+
+*choose between output of adder or output of multiplier
+Xarith ALUFN1#32 s[31:0] m[31:0] arith[31:0] mux2
+
+*instantiate*
+Xboole ALUFN[3:0] A[31:0] B[31:0] boole[31:0] boole32
+
+Xshift ALUFN[1:0] A[31:0] [4:0] shift[31:0] shift32
+
+Xcmp ALUFN[2:1] z v n cmp[31:0] compare32
+
+Xalu ALUFN4#32 ALUFN5#32 arith[31:0] boole[31:0] shift[31:0] cmp[31:0] alu[31:0] mux4
+
+* END ANSWER
+.ends
+**********************************

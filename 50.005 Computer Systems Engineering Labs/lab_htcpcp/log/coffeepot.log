@@ -1,0 +1,153 @@
+INFO:root:Received message: GET coffee://ducky HTTP/1.1
+Content-Type: application/coffee-pot-command
+
+
+INFO:root:Sending response: HTCPCP/1.1 200 OK
+Server: CoffeePot
+Content-Type: message/coffeepot
+Date: Thu, 03 Aug 2023 13:20:59
+
+{}
+INFO:root:Closing connection
+INFO:root:Connection closed
+INFO:root:Received message: BREW coffee://ducky HTTP/1.1
+Content-Type: application/coffee-pot-command
+Accept-Additions: tea
+Use-Pot: ducky
+
+start
+INFO:root:Closing connection
+INFO:root:Connection closed
+INFO:root:Received message: GET coffee://ducky HTTP/1.1
+Content-Type: application/coffee-pot-command
+
+
+INFO:root:Sending response: HTCPCP/1.1 200 OK
+Server: CoffeePot
+Content-Type: message/coffeepot
+Date: Thu, 03 Aug 2023 13:21:09
+
+{}
+INFO:root:Closing connection
+INFO:root:Connection closed
+INFO:root:Received message: BREW coffee://ducky HTTP/1.1
+Content-Type: application/coffee-pot-command
+Use-Pot: ducky
+
+start
+INFO:root:Sending response: HTCPCP/1.1 200 OK
+Server: CoffeePot
+Content-Type: message/coffeepot
+Date: Thu, 03 Aug 2023 13:21:12
+
+
+INFO:root:Closing connection
+INFO:root:Connection closed
+INFO:root:Received message: GET coffee://ducky HTTP/1.1
+Content-Type: application/coffee-pot-command
+
+
+INFO:root:Sending response: HTCPCP/1.1 200 OK
+Server: CoffeePot
+Content-Type: message/coffeepot
+Date: Thu, 03 Aug 2023 13:21:12
+
+{"date": "Thu, 03 Aug 2023 13:21:12", "beverage_type": "Coffee", "additions": [], "brew_time_end": "Thu, 03 Aug 2023 13:21:42", "pouring_milk": "", "coffee_bean": {"name": "Star of Hanoi Coffee", "profile": "Spice", "origin": "Vietnam, Asia", "type": "Single Origin", "strength": "2.5/5", "roast": "Medium dark"}}
+INFO:root:Closing connection
+INFO:root:Connection closed
+INFO:root:Received message: BREW coffee://ducky HTTP/1.1
+Content-Type: application/coffee-pot-command
+Accept-Additions: tea
+Use-Pot: ducky
+
+start
+INFO:root:Closing connection
+INFO:root:Connection closed
+INFO:root:Received message: GET coffee://ducky HTTP/1.1
+Content-Type: application/coffee-pot-command
+
+
+INFO:root:Sending response: HTCPCP/1.1 200 OK
+Server: CoffeePot
+Content-Type: message/coffeepot
+Date: Thu, 03 Aug 2023 13:21:22
+
+{"date": "Thu, 03 Aug 2023 13:21:12", "beverage_type": "Coffee", "additions": [], "brew_time_end": "Thu, 03 Aug 2023 13:21:42", "pouring_milk": "", "coffee_bean": {"name": "Star of Hanoi Coffee", "profile": "Spice", "origin": "Vietnam, Asia", "type": "Single Origin", "strength": "2.5/5", "roast": "Medium dark"}}
+INFO:root:Closing connection
+INFO:root:Connection closed
+INFO:root:Received message: GET coffee://ducky HTTP/1.1
+Content-Type: application/coffee-pot-command
+
+
+INFO:root:Sending response: HTCPCP/1.1 200 OK
+Server: CoffeePot
+Content-Type: message/coffeepot
+Date: Thu, 03 Aug 2023 13:21:49
+
+{"date": "Thu, 03 Aug 2023 13:21:12", "beverage_type": "Coffee", "additions": [], "brew_time_end": "Thu, 03 Aug 2023 13:21:42", "pouring_milk": "", "coffee_bean": {"name": "Star of Hanoi Coffee", "profile": "Spice", "origin": "Vietnam, Asia", "type": "Single Origin", "strength": "2.5/5", "roast": "Medium dark"}}
+INFO:root:Closing connection
+INFO:root:Connection closed
+INFO:root:Received message: GET coffee://ducky HTTP/1.1
+Content-Type: application/coffee-pot-command
+
+
+INFO:root:Sending response: HTCPCP/1.1 200 OK
+Server: CoffeePot
+Content-Type: message/coffeepot
+Date: Thu, 03 Aug 2023 13:22:53
+
+{"date": "Thu, 03 Aug 2023 13:21:12", "beverage_type": "Coffee", "additions": [], "brew_time_end": "Thu, 03 Aug 2023 13:21:42", "pouring_milk": "", "coffee_bean": {"name": "Star of Hanoi Coffee", "profile": "Spice", "origin": "Vietnam, Asia", "type": "Single Origin", "strength": "2.5/5", "roast": "Medium dark"}}
+INFO:root:Closing connection
+INFO:root:Connection closed
+INFO:root:Received message: GET coffee://ducky HTTP/1.1
+Content-Type: application/coffee-pot-command
+
+
+INFO:root:Sending response: HTCPCP/1.1 200 OK
+Server: CoffeePot
+Content-Type: message/coffeepot
+Date: Thu, 03 Aug 2023 13:23:01
+
+{"date": "Thu, 03 Aug 2023 13:21:12", "beverage_type": "Coffee", "additions": [], "brew_time_end": "Thu, 03 Aug 2023 13:21:42", "pouring_milk": "", "coffee_bean": {"name": "Star of Hanoi Coffee", "profile": "Spice", "origin": "Vietnam, Asia", "type": "Single Origin", "strength": "2.5/5", "roast": "Medium dark"}}
+INFO:root:Closing connection
+INFO:root:Connection closed
+INFO:root:Received message: BREW coffee://ducky HTTP/1.1
+Content-Type: application/coffee-pot-command
+
+stop
+INFO:root:Sending response: HTCPCP/1.1 200 OK
+Server: CoffeePot
+Content-Type: message/coffeepot
+Date: Thu, 03 Aug 2023 13:23:05
+
+
+INFO:root:Closing connection
+INFO:root:Connection closed
+INFO:root:Received message: GET coffee://ducky HTTP/1.1
+Content-Type: application/coffee-pot-command
+
+
+INFO:root:Sending response: HTCPCP/1.1 200 OK
+Server: CoffeePot
+Content-Type: message/coffeepot
+Date: Thu, 03 Aug 2023 13:23:05
+
+{}
+INFO:root:Closing connection
+INFO:root:Connection closed
+INFO:root:Received message: BREW coffee://ducky HTTP/1.1
+Content-Type: application/coffee-pot-command
+Accept-Additions: tea
+Use-Pot: ducky
+
+start
+INFO:root:Closing connection
+INFO:root:Connection closed
+INFO:root:Received message: BREW coffee://ducky HTTP/1.1
+Content-Type: application/coffee-pot-command
+Accept-Additions: tea
+Use-Pot: ducky
+
+start
+INFO:root:Closing connection
+INFO:root:Connection closed

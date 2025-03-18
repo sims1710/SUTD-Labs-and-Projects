@@ -1,0 +1,14 @@
+1. False
+There is a difference between addition and subtraction in GF(3) for certain elements. For example, 1 - 2 = 2 in GF(3) since the result wraps around to the positive range.
+
+2. True
+In GF(2N), addition and subtraction operations are equivalent for all elements. This is because GF(2N) uses binary arithmetic, where addition and subtraction are performed using the XOR operation.
+
+3. True
+In GF(2), multiplication is equivalent to an AND gate. This is because the coefficients in GF(2) are restricted to 0 and 1, where 1 represents true and multiplication corresponds to logical AND.
+
+4. False
+A polynomial of degree 8 is not a possible element of the field GF(2^8). In GF(2^8), the field elements are polynomials of degree less than 8 with coefficients in GF(2), meaning polynomials of degree 8 are not valid elements of the field.
+
+5. False
+P(x) = x^4 + x^3 + x + 1 is not an irreducible polynomial. It can be factored as (x^2 + x + 1)(x^2 + 1) over GF(2), indicating that it has nontrivial factors and is reducible.

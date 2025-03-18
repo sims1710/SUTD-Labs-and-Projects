@@ -1,0 +1,19 @@
+Q1
+In the real world, the exchange of keys can be performed using various methods, such as:
+
+1. Secure Key Exchange Protocol (DHKE)
+2. Physical Exchange (Printed document or USB)
+3. Trusted Third Party (KDC)
+4. Public Key Infrastructure (PKI)
+
+In general, it is desirable to have a secure channel for exchanging keys to ensure the confidentiality and integrity of the exchanged information. Without a secure channel, there is a risk of interception, tampering, or impersonation by malicious actors.
+
+
+Q2
+Advantage: Key Exchange without Prior Communication - It allows parties to derive a shared secret key even if they have never interacted before, making it suitable for scenarios where pre-shared keys are not feasible.
+Disadvantage: Lack of Authentication - There is a vulnerability to man-in-the-middle attacks, where an attacker intercepts the key exchange and impersonates one or both parties.
+
+
+Q3
+The key will be 2048 bits.
+The decision to use a 2048-bit key size is a balance between security and performance. While larger key sizes offer stronger security, they also require more computational resources for key generation, encryption, and decryption operations. A 2048-bit key size is an industry standard in providing sufficient security while still being computationally feasible for most practical applications.

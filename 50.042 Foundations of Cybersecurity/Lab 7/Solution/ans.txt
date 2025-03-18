@@ -1,0 +1,3 @@
+LIMITATION OF RSA ATTACK
+
+It relies on specific vulnerabilities or weaknesses in the implementation of RSA rather than on the mathematical properties of the RSA algorithm. That is, if RSA is correctly implemented with all the proper configurations(appropriate key lengths, random number generation and so on), it is considered secure against such attacks.
