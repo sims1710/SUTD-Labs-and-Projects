@@ -1,0 +1,4 @@
+(drive tampines bedok truck1)
+(load package1 bedok truck1)
+(drive bedok changi truck1)
+(unload package1 changi truck1)
